@@ -28,8 +28,7 @@ while True:
             d = response['DailyAverageAirQuality']['row'][0]
             df = df.append(d,ignore_index=True)
         else:
-            print('No')
-            break
+            print(response)
 
     nowDate = nowDate + datetime.timedelta(days=1)
 
