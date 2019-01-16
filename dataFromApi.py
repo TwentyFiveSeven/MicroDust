@@ -26,12 +26,12 @@ while True:
         response = requests.get(url).json()
         if 'DailyAverageAirQuality' in response:
             d = response['DailyAverageAirQuality']['row'][0]
-            df = df.append(d,ignore_index=True)
         else:
-            print(response)
+            d = {'MSRDT_DE': date2String, 'MSRSTE_NM': gu, 'NO2': 0.0, 'O3': 0.0, 'CO': 0.0, 'SO2': 0.0, 'PM10': 0.0, 'PM25': 0.0}
+        df = df.append(d,ignore_index=True)
 
     nowDate = nowDate + datetime.timedelta(days=1)
 
-df.to_excel('a.xlsx', sheet_name='sheet1')
+df.to_excel('b.xlsx', sheet_name='Sheet1')
 
 
