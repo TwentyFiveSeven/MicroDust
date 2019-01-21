@@ -18,7 +18,7 @@ df =pd.DataFrame(columns=['MSRDT_DE', 'MSRSTE_NM', 'NO2', 'O3', 'CO','SO2','PM10
 while True:
     date2String = nowDate.strftime('%Y%m%d')
     
-    if date2String == '20190101':/Users/suhyeongcho/Desktop/a.xlsx
+    if date2String == '20190101':
         break
     
     for gu in Gu:
