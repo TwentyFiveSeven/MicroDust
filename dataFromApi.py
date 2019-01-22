@@ -3,7 +3,7 @@ import requests
 import json
 import pandas as pd
 
-startDate = datetime.date(2011,1,1)
+startDate = datetime.date(2013,8,1)
 #endDate = datetime.date(2018,12,31)
 
 nowDate = startDate
@@ -32,6 +32,6 @@ while True:
 
     nowDate = nowDate + datetime.timedelta(days=1)
 
-df.to_excel('b.xlsx', sheet_name='Sheet1')
+df.to_excel('AirQuality.xlsx', sheet_name='AirQuality')
 
 
