@@ -1,0 +1,94 @@
+1. 미세먼지 예측
+https://bigdata.seoul.go.kr/noti/selectNoti.do?r_id=P420&bbs_seq=145&sch_type=&sch_text=&currentPage=1
+Time Series(시계열 데이터) -> LSTM, RNN
+Training Data : 2011년 1월 ~ 2018년 6월
+Test Data : 2018년 7월 ~ 2018년 12월
+
+2. 데이터
+
+2.1. API -> 데이터
+http://data.seoul.go.kr/dataList/datasetView.do?infId=OA-2218&srvType=S&serviceKind=1&currentPageNo=1
+2.1.1. 인증키 : 6f58494c7963393536356d7a595474
+2.1.2. 요청url : http://openAPI.seoul.go.kr:8088/6f58494c7963393536356d7a595474/xml/DailyAverageAirQuality/1/5/20130228/강변북로
+
+{'DailyAverageAirQuality': {'list_total_count': 1, 'RESULT': {'CODE': 'INFO-000', 'MESSAGE': '정상 처리되었습니다'}, 'row': [{'MSRDT_DE': '20150202', 'MSRSTE_NM': '강남구', 'NO2': 0.053, 'O3': 0.006, 'CO': 0.6, 'SO2': 0.005, 'PM10': 40.0, 'PM25': 23.0}]}}
+
+2.2. 데이터 행렬(서울시 구, 대기오염)
+2.2.1. 서울시 구(행,25)
+강남구
+강동구
+강북구
+강서구
+관악구
+광진구
+구로구
+금천구
+노원구
+도봉구
+동대문구
+동작구
+마포구
+서대문구
+서초구
+성동구
+성북구
+송파구
+양천구
+영등포구
+용산구
+은평구
+종로구
+중구
+중랑구
+
+2.2.2. 대기오염(열,8)
+측정일시
+측정소명
+이산화질소농도(ppm)
+오존농도(ppm)
+일산화탄소농도(ppm)
+아황산가스(ppm)
+미세먼지(㎍/㎥)
+초미세먼지(㎍/㎥)
+
+
+3. 데이터준비
+3.1. 데이터 없는거
+3.1.1. 0으로 비어있는 데이터는 전체 열의 평균을 집어 넣음 
+3.1.2. '구'가 없으면 전체 행의 평균을 구해서 집어넣음
+
+3.2 초미세먼지는 20130801부터 기록
+
+
+2.3. shape(data) -> (73050,8)
+
+
+4. 데이터가공
+
+Normalization?
+
+CNN?
+
+NCHW : np.reshape(data,[-1,1,25,6])
+NHWC : np.reshape(data,[-1,25,6,1]) -> 채택
+
+C -> conv1 -> conv2 ->conv3-> pool_flat -> fc1 ->fc2 -> output
+Output.shape -> (?,150)
+
+RNN?
+
+7개(window_size)씩 끊어서 RNN학습
+Outputs.shape -> (?,7,1024)
+Outputs.shape -> (?,1024)로 변환
+예측된 150개 데이터와 실제 150개 데이터 비교 -> Y=XW+b
+W.shape -> (1024,150)
+b.shape -> (150)
+
+Y.shape -> (?,150)
+
+5. 데이터훈련
+
+6. 데이터예측
+
+7. 데이터시각화
+
